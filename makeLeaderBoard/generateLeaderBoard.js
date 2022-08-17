@@ -12,60 +12,48 @@ const min = (a, b) => {
 const init = () => {
 
     let participants = JSON.parse(dbFunc.read("db.json"))
-    profile = participants["participants"]
+    leaderBoard = participants["participants"]
 
-    let leaderBoard = []
-    for (let i = 0; i < profile.length; i++) {
-
-        if (profile[i]["isEnrollStatusGood"] == false) {
-            continue;
+    // sample data
+    /**
+     {
+            "firstName": "Madhav",
+            "lastName": "Jha",
+            "name": "Madhav Jha",
+            "profileID": "jhamadhav28",
+            "profileLink": "https://www.codechef.com/users/jhamadhav28/",
+            "questions": {
+                "EMAILREM": {
+                    "done": true,
+                    "time": "03:55 PM 10/04/22",
+                    "timestamp": 1664879100000
+                },
+                "BUDGET_": {
+                    "done": true,
+                    "time": "04:00 PM 10/04/22",
+                    "timestamp": 1664879400000
+                },
+                "count": 2,
+                "lastAC": 1664879100000
+            }
         }
-
-        let color = "black";
-        if (profile[i]["trackOne"] == 6 || profile[i]["trackTwo"] == 6) {
-            color = "blue"
-        }
-        if (profile[i]["trackOne"] == 6 && profile[i]["trackTwo"] == 6) {
-            color = "green"
-        }
-        let data = {
-            name: profile[i]["name"],
-            nickname: profile[i]["nickname"],
-            skills: profile[i]["skills"],
-            trackOne: profile[i]["trackOne"],
-            trackTwo: profile[i]["trackTwo"],
-            color,
-            latestSkill: (profile[i]["badges"][0]) ? profile[i]["badges"][0]["badgeDate"] : null
-        }
-        leaderBoard.push(data)
-    }
+     */
 
     leaderBoard.sort((a, b) => {
-        let maxA = max(a["trackOne"], a["trackTwo"])
-        let maxB = max(b["trackOne"], b["trackTwo"])
-        let minA = min(a["trackOne"], a["trackTwo"])
-        let minB = min(b["trackOne"], b["trackTwo"])
-        if (maxA == maxB) {
+        if (a["questions"]["count"] == b["questions"]["count"]) {
 
-            if (minA == minB) {
-                if (a["latestSkill"] == b["latestSkill"]) {
-                    return 0
-                } else if (a["latestSkill"] < b["latestSkill"]) {
-                    return -1
-                } else {
-                    return 1
-                }
-            } else if (minA > minB) {
-                return -1
-            } else {
-                return 1
+            if (a["questions"]["lastAC"] == null || a["questions"]["lastAC"] == "lastAC") {
+                a["questions"]["lastAC"] = Infinity
+            }
+            if (b["questions"]["lastAC"] == null || b["questions"]["lastAC"] == "lastAC") {
+                b["questions"]["lastAC"] = Infinity
             }
 
-        } else if (maxA > maxB) {
-            return -1
-        } else {
-            return 1
+            return ((a["questions"]["lastAC"] < b["questions"]["lastAC"]) ? -1 : 1)
+
         }
+
+        return ((a["questions"]["count"] > b["questions"]["count"]) ? -1 : 1)
     })
 
     let leaderBoardData = "const leaderBoardData = ["

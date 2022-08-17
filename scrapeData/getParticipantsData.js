@@ -52,7 +52,7 @@ const init = async () => {
 
         console.log(`Fetching Person ${i + 1}: `)
 
-        let count = 0
+        let count = 0, lastQsTime = - 1
         for (let j = 0; j < qsList.length; ++j) {
             await delay(200)
             console.log(`Question:  ${qsList[j]}`)
@@ -60,13 +60,20 @@ const init = async () => {
             let qsData = await scrapper.getQsData(profile[i]["profileID"], qsList[j])
 
             if (qsData != false) count++;
+
             profile[i]["questions"][qsList[j]] = {
                 "done": ((qsData === false) ? false : true),
                 "time": ((qsData === false) ? null : qsData),
                 "timestamp": ((qsData === false) ? null : (new Date(qsData)).getTime())
             }
+
+            if (lastQsTime == -1 || lastQsTime > profile[i]["questions"][qsList[j]]["timestamp"]) {
+                lastQsTime = profile[i]["questions"][qsList[j]]["timestamp"]
+            }
+
         }
         profile[i]["questions"]["count"] = count
+        profile[i]["questions"]["lastAC"] = lastQsTime
     }
 
     console.log("\nUpdating db.json\n");
