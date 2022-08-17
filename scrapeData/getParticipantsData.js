@@ -1,7 +1,7 @@
 const scrapper = require("./scrapper.js")
 const dbFunc = require("./../dbFunc.js")
+const { qsList } = require("./qsListData")
 const dbFileLoc = "db.json"
-const trackData = require("./trackData.js")
 
 const delay = (time) => {
     return new Promise(function (resolve) {
@@ -24,75 +24,49 @@ const getCurrentTime = () => {
     return strDateTime
 }
 
-const joinStr = (inp) => {
-    try {
-        inp = inp.replace("amp;", "")
-        inp = inp.toLowerCase().split(" ").join("").trim()
-    } catch {
-        console.log(inp);
-    }
-    return inp
-}
-
 const init = async () => {
     /**
-     * 1.get profile links
-     * 2. scrape their data
-     * 3. match badges
-     * 4. send mails
+     * 1. get profile links
+     * 2. check if Questions are done or not
+     * 3. Update participants file with number of Questions done data
      */
     console.log("\n=========================");
-    console.log("---Fetching Badge Data---");
+    console.log("---Fetching CodeChef Data---");
     console.log("=========================\n");
 
     let participants = JSON.parse(dbFunc.read("participants.json"))
+    // dummy data to test
     let profile = [{
+        "firstName": "Madhav",
+        "lastName": "Jha",
         "name": "Madhav Jha",
-        "profileLink": "https://www.qwiklabs.com/public_profiles/1d192aa3-51d2-444b-ae36-f54252af7adc",
-        "enrollDate": 1632355200000,
-        "isEnrollStatusGood": true,
-        "nickname": "Bouncy Vampire"
+        "profileID": "jhamadhav28",
+        "profileLink": "https://www.codechef.com/users/jhamadhav28/"
     }]
+    // gets replace by real data from file so keep comment below line while testing 
     profile = participants["profiles"]
 
     for (let i = 0; i < profile.length; i++) {
-        // await delay(400)
-        if (profile[i]["isEnrollStatusGood"] == false) {
-            continue;
-        }
-        console.log(`Fetching Person ${i + 1}`)
-        let badges = await scrapper.getBadges(profile[i]["profileLink"], profile[i]["enrollDate"])
-        profile[i]["badges"] = badges
-    }
 
-    // count skills and quests
-    let track1 = trackData.trackData[0];
-    track1.skills = track1.skills.map(elem => elem.name).map(elem => joinStr(elem))
+        profile[i]["questions"] = {}
 
-    let track2 = trackData.trackData[1];
-    track2.skills = track2.skills.map(elem => elem.name).map(elem => joinStr(elem))
+        console.log(`Fetching Person ${i + 1}: `)
 
-    for (let i = 0; i < profile.length; i++) {
-        if (profile[i]["isEnrollStatusGood"] == false) {
-            continue;
-        }
-        let badges = profile[i]["badges"].map(elem => elem.badgeName)
+        let count = 0
+        for (let j = 0; j < qsList.length; ++j) {
+            await delay(200)
+            console.log(`Question:  ${qsList[j]}`)
 
-        let skills = 0, trackOne = 0, trackTwo = 0
-        badges.forEach(elem => {
-            elem = joinStr(elem)
-            if (track1.skills.indexOf(elem) != -1) {
-                trackOne++;
-                skills++;
+            let qsData = await scrapper.getQsData(profile[i]["profileID"], qsList[j])
+
+            if (qsData != false) count++;
+            profile[i]["questions"][qsList[j]] = {
+                "done": ((qsData === false) ? false : true),
+                "time": ((qsData === false) ? null : qsData),
+                "timestamp": ((qsData === false) ? null : (new Date(qsData)).getTime())
             }
-            if (track2.skills.indexOf(elem) != -1) {
-                trackTwo++;
-                skills++;
-            }
-        });
-        profile[i]["skills"] = skills
-        profile[i]["trackOne"] = trackOne
-        profile[i]["trackTwo"] = trackTwo
+        }
+        profile[i]["questions"]["count"] = count
     }
 
     console.log("\nUpdating db.json\n");
