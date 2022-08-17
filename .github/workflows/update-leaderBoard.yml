@@ -1,8 +1,8 @@
 name: Update leaderBoard data
 on:
- # schedule:
-    # Runs at midnight everyday
-   - cron: '0 */2 * * *'
+  schedule:
+    # Runs every four hour
+    - cron: '0 */4 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
