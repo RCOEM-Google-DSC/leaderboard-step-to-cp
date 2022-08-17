@@ -42,13 +42,12 @@ const init = () => {
     leaderBoard.sort((a, b) => {
         if (a["questions"]["count"] == b["questions"]["count"]) {
 
-            if (a["questions"]["lastAC"] == null || a["questions"]["lastAC"] == "lastAC") {
-                a["questions"]["lastAC"] = Infinity
-            }
-            if (b["questions"]["lastAC"] == null || b["questions"]["lastAC"] == "lastAC") {
-                b["questions"]["lastAC"] = Infinity
-            }
+            a["questions"]["lastAC"] = (a["questions"]["lastAC"] == null) ? Infinity : a["questions"]["lastAC"]
+            b["questions"]["lastAC"] = (b["questions"]["lastAC"] == null) ? Infinity : b["questions"]["lastAC"]
 
+            if (a["questions"]["lastAC"] == b["questions"]["lastAC"]) {
+                return ((a["name"] < b["name"]) ? -1 : 1)
+            }
             return ((a["questions"]["lastAC"] < b["questions"]["lastAC"]) ? -1 : 1)
 
         }

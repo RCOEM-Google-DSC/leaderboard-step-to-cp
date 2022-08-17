@@ -1,18 +1,1 @@
-{
-    "profiles": [
-        {
-            "firstName": "Siddhesh",
-            "lastName": "Jawadi",
-            "name": "Siddhesh Jawadi",
-            "profileID": "sid_jawadi",
-            "profileLink": "https://www.codechef.com/users/sid_jawadi"
-        },
-        {
-            "firstName": "Madhav",
-            "lastName": "Jha",
-            "name": "Madhav Jha",
-            "profileID": "jhamadhav28",
-            "profileLink": "https://www.codechef.com/users/jhamadhav28/"
-        }
-    ]
-}
+{"profiles":[{"firstName":"Siddhesh","lastName":"Jawadi","name":"Siddhesh Jawadi","profileID":"sid_jawadi","profileLink":"https://www.codechef.com/users/sid_jawadi"},{"firstName":"Madhav","lastName":"Jha","name":"Madhav Jha","profileID":"jhamadhav28","profileLink":"https://www.codechef.com/users/jhamadhav28/"},{"firstName":"Pratik ","lastName":"Agrawal","name":"Pratik  Agrawal","profileID":"jhamadhav28","profileLink":"https://www.codechef.com/users/jhamadhav28/"},{"firstName":"A","lastName":"K","name":"A K","profileID":"abcd123","profileLink":"https://www.codechef.com/users/abcd123"},{"firstName":"Siddhesh","lastName":"Jawadi","name":"Siddhesh Jawadi","profileID":"sid_jawadi","profileLink":"https://www.codechef.com/users/sid_jawadi"},{"firstName":"Devashree","lastName":"Ambegaokar ","name":"Devashree Ambegaokar ","profileID":"devashree_30","profileLink":"https://www.codechef.com/users/devashree_30"},{"firstName":"Tushar ","lastName":"Rawte","name":"Tushar  Rawte","profileID":"tushar_raw","profileLink":"https://www.codechef.com/users/tushar_raw"},{"firstName":"Vedant ","lastName":"Tiwari","name":"Vedant  Tiwari","profileID":"vedant_3874","profileLink":"https://www.codechef.com/users/vedant_3874"},{"firstName":"Arnav","lastName":"Kadu","name":"Arnav Kadu","profileID":"arna_v","profileLink":"https://www.codechef.com/users/arna_v"},{"firstName":"Aadi","lastName":"Ringay","name":"Aadi Ringay","profileID":"aadfi","profileLink":"https://www.codechef.com/users/aadfi"},{"firstName":"Aryan","lastName":"Dhait","name":"Aryan Dhait","profileID":"aryan1110","profileLink":"https://www.codechef.com/users/aryan1110"},{"firstName":"Nishant","lastName":"Thakre","name":"Nishant Thakre","profileID":"nishantth1","profileLink":"https://www.codechef.com/users/nishantth1"}]}

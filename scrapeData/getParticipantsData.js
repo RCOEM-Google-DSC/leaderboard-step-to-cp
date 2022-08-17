@@ -50,7 +50,7 @@ const init = async () => {
 
         profile[i]["questions"] = {}
 
-        console.log(`Fetching Person ${i + 1}: `)
+        console.log(`Fetching Person ${i + 1}: ${profile[i]["name"]}`)
 
         let count = 0, lastQsTime = - 1
         for (let j = 0; j < qsList.length; ++j) {
