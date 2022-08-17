@@ -2,5 +2,3 @@ node_modules
 
 rawParticipantsData.json
 db.json
-cred.js
-package-lock.json

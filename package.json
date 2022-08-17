@@ -1,5 +1,5 @@
 {
-  "name": "LeaderBoard - A Step Toward Competitive Programming",
+  "name": "LeaderBoard",
   "version": "1.0.0",
   "description": "Leader-board for Participants to make \"A Step Toward Competitive Programming\" more informative, interactive and fun .",
   "main": "index.js",
