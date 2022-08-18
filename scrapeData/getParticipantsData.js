@@ -67,7 +67,7 @@ const init = async () => {
                 "timestamp": ((qsData === false) ? null : (new Date(qsData)).getTime())
             }
 
-            if (lastQsTime == -1 || lastQsTime > profile[i]["questions"][qsList[j]]["timestamp"]) {
+            if (lastQsTime == -1 || lastQsTime < profile[i]["questions"][qsList[j]]["timestamp"]) {
                 lastQsTime = profile[i]["questions"][qsList[j]]["timestamp"]
             }
 
