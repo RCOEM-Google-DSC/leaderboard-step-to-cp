@@ -24,6 +24,12 @@ const getCurrentTime = () => {
     return strDateTime
 }
 
+const swap = (a, b) => {
+    let temp = a;
+    a = b;
+    b = temp
+}
+
 const init = async () => {
     /**
      * 1. get profile links
@@ -59,7 +65,24 @@ const init = async () => {
 
             let qsData = await scrapper.getQsData(profile[i]["profileID"], qsList[j])
 
-            if (qsData != false) count++;
+            if (qsData != false) {
+                count++
+
+                let t = qsData.split(" ");
+                t1 = t[t.length - 1]
+                t1 = t1.split("/")
+                // console.log(t1);
+
+                let temp = t1[0]
+                t1[0] = t1[1]
+                t1[1] = temp
+
+                t1 = t1.join("/")
+                t[t.length - 1] = t1
+                t = t.join(" ")
+                // console.log(t);
+                qsData = t
+            }
 
             profile[i]["questions"][qsList[j]] = {
                 "done": ((qsData === false) ? false : true),
