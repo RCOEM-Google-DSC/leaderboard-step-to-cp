@@ -6,41 +6,29 @@ const makeRequest = async (url) => {
     return res.text()
 }
 
-const getQsData = async (ID, qs) => {
+const getQsData = async (ID) => {
 
-    // console.log(`ID: ${ID}, qs: ${qs}`);
+    profileUrl = `https://www.codechef.com/users/${ID}`
 
-    url = `https://www.codechef.com/status/${qs}?sort_by=All&sorting_order=asc&language=All&status=FullAC&handle=${ID}&Submit=GO`
-
-    let htmlData = await makeRequest(url)
+    let htmlData = await makeRequest(profileUrl)
     htmlData = parser.parse(htmlData)
 
     // console.log(htmlData);
 
-    let submissionClass = htmlData.querySelectorAll(".dataTable")
-    if (!submissionClass) {
-        console.log("No submission found\n");
+    let aTags = htmlData.querySelectorAll("a")
+    if (!aTags) {
+        console.log("No A tags found\n");
         return false
     }
-
-    let firstAC = htmlData.querySelectorAll(".dataTable tbody tr")
-    if (!firstAC) {
-        console.log("No submission found\n");
-        return false
+    let res = []
+    for (let i = 0; i < aTags.length; ++i) {
+        res.push(aTags[i].innerText)
+        // console.log(aTags[i].innerText);
     }
 
-    let firstACelem = firstAC[firstAC.length - 1]
-    let acTimeElem = firstACelem.querySelectorAll("td")[1]
-
-    if (!acTimeElem) {
-        console.log("No AC time div found\n");
-        return false
-    }
-
-    let res = acTimeElem.innerText
-    console.log(`AC found at ${res}\n`);
-
+    console.log("Data scrapped\n");
     return res
 }
+
 
 module.exports = { getQsData }
