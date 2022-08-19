@@ -1,0 +1,1 @@
+ // console.log(aTags[i].innerText);

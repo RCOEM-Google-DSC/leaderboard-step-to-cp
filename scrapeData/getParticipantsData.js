@@ -54,51 +54,29 @@ const init = async () => {
 
     for (let i = 0; i < profile.length; i++) {
 
-        profile[i]["questions"] = {}
-
+        await delay(200)
         console.log(`Fetching Person ${i + 1}: ${profile[i]["name"]}`)
 
-        let count = 0, lastQsTime = - 1
+        let qsData = await scrapper.getQsData(profile[i]["profileID"])
+
+        profile[i]["questions"] = {}
+        let count = 0
         for (let j = 0; j < qsList.length; ++j) {
-            await delay(800)
-            console.log(`Question:  ${qsList[j]}`)
 
-            let qsData = await scrapper.getQsData(profile[i]["profileID"], qsList[j])
+            let flag = qsData.indexOf(qsList[j])
+            flag = (flag == -1) ? false : true;
 
-            if (qsData != false) {
+            if (flag) {
                 count++
-
-                let t = qsData.split(" ");
-                t1 = t[t.length - 1]
-                t1 = t1.split("/")
-                // console.log(t1);
-
-                let temp = t1[0]
-                t1[0] = t1[1]
-                t1[1] = temp
-
-                t1 = t1.join("/")
-                t[t.length - 1] = t1
-                t = t.join(" ")
-                // console.log(t);
-                qsData = t
             }
 
-            profile[i]["questions"][qsList[j]] = {
-                "done": ((qsData === false) ? false : true),
-                "time": ((qsData === false) ? null : qsData),
-                "timestamp": ((qsData === false) ? null : (new Date(qsData)).getTime())
-            }
-
-            if (lastQsTime == -1 || lastQsTime < profile[i]["questions"][qsList[j]]["timestamp"]) {
-                lastQsTime = profile[i]["questions"][qsList[j]]["timestamp"]
-            }
+            profile[i]["questions"][qsList[j]] = flag
 
         }
         profile[i]["questions"]["count"] = count
-        profile[i]["questions"]["lastAC"] = lastQsTime
     }
 
+    // console.log(profile);
     console.log("\nUpdating db.json\n");
     let db = {
         "participants": profile,

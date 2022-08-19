@@ -17,39 +17,18 @@ const init = () => {
     // sample data
     /**
      {
-            "firstName": "Madhav",
-            "lastName": "Jha",
-            "name": "Madhav Jha",
-            "profileID": "jhamadhav28",
-            "profileLink": "https://www.codechef.com/users/jhamadhav28/",
-            "questions": {
-                "EMAILREM": {
-                    "done": true,
-                    "time": "03:55 PM 10/04/22",
-                    "timestamp": 1664879100000
-                },
-                "BUDGET_": {
-                    "done": true,
-                    "time": "04:00 PM 10/04/22",
-                    "timestamp": 1664879400000
-                },
-                "count": 2,
-                "lastAC": 1664879100000
-            }
-        }
+        firstName: 'Madhav',
+        lastName: 'Jha',
+        name: 'Madhav Jha',
+        profileID: 'jhamadhav28',
+        profileLink: 'https://www.codechef.com/users/jhamadhav28/',
+        questions: { EMAILREM: true, BUDGET_: true, count: 2 }
+    }
      */
 
     leaderBoard.sort((a, b) => {
         if (a["questions"]["count"] == b["questions"]["count"]) {
-
-            a["questions"]["lastAC"] = (a["questions"]["lastAC"] == null) ? Infinity : a["questions"]["lastAC"]
-            b["questions"]["lastAC"] = (b["questions"]["lastAC"] == null) ? Infinity : b["questions"]["lastAC"]
-
-            if (a["questions"]["lastAC"] == b["questions"]["lastAC"]) {
-                return ((a["name"] < b["name"]) ? -1 : 1)
-            }
-            return ((a["questions"]["lastAC"] < b["questions"]["lastAC"]) ? -1 : 1)
-
+            return ((a["name"] < b["name"]) ? -1 : 1)
         }
 
         return ((a["questions"]["count"] > b["questions"]["count"]) ? -1 : 1)
