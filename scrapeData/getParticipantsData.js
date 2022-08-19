@@ -54,7 +54,7 @@ const init = async () => {
 
     for (let i = 0; i < profile.length; i++) {
 
-        await delay(400)
+        await delay(200)
         console.log(`Fetching Person ${i + 1}: ${profile[i]["name"]}`)
 
         let qsData = await scrapper.getQsData(profile[i]["profileID"])
