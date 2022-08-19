@@ -60,7 +60,7 @@ const init = async () => {
 
         let count = 0, lastQsTime = - 1
         for (let j = 0; j < qsList.length; ++j) {
-            await delay(500)
+            await delay(800)
             console.log(`Question:  ${qsList[j]}`)
 
             let qsData = await scrapper.getQsData(profile[i]["profileID"], qsList[j])
