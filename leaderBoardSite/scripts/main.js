@@ -29,8 +29,6 @@ const init = async () => {
         addToLeaderBoard(i + 1, leaderBoardData[i])
     }
 
-    time = time.split(" ")
-    time = time[0]
     document.getElementById("timeUpdate").innerText = `Last Updated : ${time}`
 
 }
